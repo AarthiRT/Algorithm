@@ -47,24 +47,25 @@ class MirrorNode {
         }
         for (int i = 0; i < Q; i++) {
         	int q = s.nextInt();
-        	System.out.println(findMirrorNode(root,q));
+        	Node res = findMirrorNode(root,root,q);
+        	if(res != null)
+        		System.out.println(res.data);
+        	else
+        		System.out.println(-1);
         }
     }
-    static int findMirrorNode(Node root, int q){
-    	int find = -1;	//no node
-    	if(root == null)
-    		return -1;
-    	if(root.data == q)
-    		return root.data;
-    	else{
-    		if(root.left != null && root.left.data == q)
-    			return root.right.data;
-    		else if(root.right != null && root.right.data == q)
-    			return root.left.data;
-    		int temp = findMirrorNode(root.left, q);
-    		if(temp == -1)
-    			temp = findMirrorNode(root.right, q);
-    	}
-    	return find;
+   
+    static Node findMirrorNode(Node left,Node right, int q){
+    	if(left == null || right == null)
+    		return null;
+    	if(left.data == q)
+    		return right;
+    	else if(right.data == q)
+    		return left;
+    	Node temp = findMirrorNode(left.left, right.right, q);
+    	if(temp != null)
+    		return temp;
+    	else
+    		return findMirrorNode(left.right, right.left, q);
     }
 }
